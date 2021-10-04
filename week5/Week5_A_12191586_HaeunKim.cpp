@@ -15,6 +15,7 @@ int main() {
 
 		vector<int> problem;
 		vector<int> answer;
+
 		int n;
 		cin >> n;
 		while (n--) {
@@ -23,22 +24,26 @@ int main() {
 			problem.push_back(num);
 		}
 
-		answer.push_back(problem[0]);
+		for (int i = 1; i <= problem.size(); i++) {
 
-		for (int i = 1; i < problem.size(); i++) {
-			if (problem[i] == problem[0]) {
-				for (int j = 1; j < answer.size(); j++) {
-					if (problem[i + j] == answer[j]) break;
-					else answer.push_back(problem[i]);
-				}
+			answer.assign(problem.begin(), problem.begin()+i);
+			int cnt = 0;
+			for (int j = 0; j < problem.size(); j++) {
+				if (answer[j % answer.size()] != problem[j]) {
+					answer.clear();
+					break;
+				}				
 			}
-			else answer.push_back(problem[i]);
+			
+			if (!answer.empty()) {
+				break;
+			}
 		}
 
-		for (int i = 0; i < answer.size(); i++) {
-			cout << answer[i] << " ";
+		for (int p = 0; p < answer.size(); p++) {
+			cout << answer[p] << " ";
 		}
 		cout << '\n';
+		
 	}
-
 }
