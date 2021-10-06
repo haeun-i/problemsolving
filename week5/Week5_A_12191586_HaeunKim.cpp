@@ -2,48 +2,44 @@
 #include <vector>
 using namespace std;
 
+int t, n;
+int* signal;
+int* prefix;
+
+void ComputePrefixFunction() {
+	prefix[1] = 0;
+	int k = 0;
+	for (int i = 2; i <= n; i++) {
+		while (k > 0 && signal[i] != signal[k + 1]) {
+			k = prefix[k];
+		}
+		if (signal[i] == signal[k + 1]) k++;
+		prefix[i] = k;
+	}
+}
+
 int main() {
-
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	cout.tie(NULL);
-
-	int t;
 	cin >> t;
 
 	while (t--) {
-
-		vector<int> problem;
-		vector<int> answer;
-
-		int n;
 		cin >> n;
-		while (n--) {
+
+		signal = new int[n + 1];
+		prefix = new int[n + 1];
+		for (int i = 1; i <= n; i++) {
 			int num;
 			cin >> num;
-			problem.push_back(num);
+			signal[i] = num;
 		}
 
-		for (int i = 1; i <= problem.size(); i++) {
+		ComputePrefixFunction();
 
-			answer.assign(problem.begin(), problem.begin()+i);
-			int cnt = 0;
-			for (int j = 0; j < problem.size(); j++) {
-				if (answer[j % answer.size()] != problem[j]) {
-					answer.clear();
-					break;
-				}				
-			}
-			
-			if (!answer.empty()) {
-				break;
-			}
+		for (int i = 1; i <= n - prefix[n]; i++) {
+			cout << signal[i] << " ";
 		}
-
-		for (int p = 0; p < answer.size(); p++) {
-			cout << answer[p] << " ";
-		}
-		cout << '\n';
-		
+		cout << "\n";
 	}
+
+	delete[] signal;
+	delete[] prefix;
 }
