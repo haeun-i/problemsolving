@@ -34,7 +34,6 @@ int main() {
 			if (stores.size() > k) stores.pop();
 		}
 
-		cout << "====================" << endl;
 		for (int i = 1; i <= n; i++) {
 			int x, y;
 			cin >> x >> y;
