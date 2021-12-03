@@ -35,16 +35,16 @@ int main() {
             if (stores.size() > k) stores.pop();
         }
 
-        for (int i = 1; i <= n; i++) {
-            int x, y;
-            cin >> x >> y;
-            point p;
-            p.x = x;
-            p.y = y;
-            p.dist = sqrt(x * x + y * y);
-            stores.push(p);
-            stores.pop();
-            cout << stores.top().x << " " << stores.top().y << '\n';
-        }
-    }
+		for (int i = 1; i <= n; i++) {
+			int x, y;
+			cin >> x >> y;
+			point p;
+			p.x = x;
+			p.y = y;
+			p.dist = sqrt(x * x + y * y);
+			stores.push(p);
+			stores.pop();
+			cout << stores.top().x << " " << stores.top().y << endl;
+		}
+	}
 }
