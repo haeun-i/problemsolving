@@ -3,48 +3,36 @@
 #include <algorithm>
 using namespace std;
 
-
 int main() {
-
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	cout.tie(NULL);
 
 	int t;
 	cin >> t;
 
 	while (t--) {
-		vector<pair<int, int>> room;
 
+		vector<pair<int, int>> rooms;
 		int n;
 		cin >> n;
-
-		while (n--) {
+	
+		for (int i = 0; i < n; i++) {
 			int a, b;
 			cin >> a >> b;
-
-			if (!room.empty()) {
-				sort(room.begin(), room.end());
-
-				vector<int> big_score;
-				for (int i = 0; i < room.size(); i++) {
-					if (room[i].first >= a) big_score.push_back(room[i].second);
-				}
-
-				int min = b;
-				if(!big_score.empty()) min = *min_element(big_score.begin(), big_score.end()); // 거리의 최솟값
-
-				if (b <= min) room.push_back(make_pair(a, b));
-			}
-			else {
-				room.push_back(make_pair(a, b));
-			}
-
-
+			rooms.push_back(make_pair(a, b));
 		}
 		
-		cout << room.size() << '\n';
+		sort(rooms.begin(), rooms.end(), greater<>());
 
+		int answer = 1;
+		int dist = rooms[0].second;
+
+		for (int i = 1; i < n; i++) {
+			if (rooms[i].second < dist) {
+				answer++;
+				dist = rooms[i].second;
+			}
+		}
+
+		cout << answer << '\n';
 
 	}
 
