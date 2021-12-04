@@ -1,25 +1,50 @@
 #include <iostream>
-#include <string>
+#include <vector>
+#include <queue>
 #include <algorithm>
 using namespace std;
 
-int room[9999];
+int t, a, b;
+vector<int> road[10000];
+int check[10000];
+queue<int> que;
 
 int main() {
-	int t;
+
+	for (int i = 0; i <= 9999; i++) {
+		if (i != 0)road[i].push_back(i - 1);
+		if (i != 9999) road[i].push_back(i + 1);
+		int num = 0;
+		int temp = i;
+		for (int j = 0; j <= 3; j++) {
+			num = num * 10 + temp % 10;
+			temp = temp / 10;
+		}
+		road[i].push_back(num);
+	}
+
+
 	cin >> t;
 
 	while (t--) {
-		int start, dest;
-		cin >> start >> dest;
+		for (int i = 0; i <= 9999; i++) check[i] = 10000;
 
-		for (int i = start; i <= dest; i++) {
-			string s = to_string(i);
-			reverse(s.begin(), s.end());
-			int num = stoi(s);
-			room[i] = 1 + min(min(room[i + 1], room[i - 1]), room[num]);
+		cin >> a >> b;
+		check[a] = 0;
+		que.push(a);
+
+		while (que.empty() == false) {
+			int now = que.front();
+			que.pop();
+
+			for (int i = 0; i < road[now].size(); i++) {
+				if (check[road[now][i]] > check[now] + 1) {
+					que.push(road[now][i]);
+					check[road[now][i]] = check[now] + 1;
+				}
+			}
 		}
 
-		cout << room[dest] << '\n';
+		cout << check[b] << endl;
 	}
 }
